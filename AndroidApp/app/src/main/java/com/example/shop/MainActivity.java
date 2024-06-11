@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +19,11 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.ivRegImage);
 
+//        String url = "http://10.0.2.2:5174/images/1.jpg";
+        String url = "http://192.168.50.18:5174/images/1.jpg";
         Glide.with(this)
-                .load("https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/corporate-user-icon.png")
+//                .load("https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/corporate-user-icon.png")
+                .load(url)
                 .apply(new RequestOptions().override(400))
                 .into(imageView);
     }

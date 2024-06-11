@@ -7,4 +7,7 @@
     <string name="phone">Телефон</string>
     <string name="password">Пароль</string>
     <string name="selectImage">Обрати фото</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="notifications">Notifications</string>
 </resources>
