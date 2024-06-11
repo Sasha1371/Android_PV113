@@ -1,8 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using System;
+using WebPizza.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<PizzaDbContext>(opt =>
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("Npgsql")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -34,5 +39,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.SeedData();
 
 app.Run();
