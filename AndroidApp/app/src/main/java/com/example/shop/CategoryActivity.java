@@ -7,7 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shop.category.CategoriesAdapter;
 import com.example.shop.dto.CategoryItemDTO;
 import com.example.shop.network.RetrofitClient;
 
@@ -19,10 +22,15 @@ import retrofit2.Response;
 
 public class CategoryActivity extends BaseActivity {
 
+    RecyclerView rcCategories;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+        rcCategories = findViewById(R.id.rcCategories);
+        rcCategories.setHasFixedSize(true);
+        rcCategories.setLayoutManager(new GridLayoutManager(this, 1, RecyclerView.VERTICAL, false));
+
         RetrofitClient
                 .getInstance()
                 .getCategoriesApi()
@@ -31,6 +39,8 @@ public class CategoryActivity extends BaseActivity {
                     @Override
                     public void onResponse(Call<List<CategoryItemDTO>> call, Response<List<CategoryItemDTO>> response) {
                         List<CategoryItemDTO> items = response.body();
+                        CategoriesAdapter ca = new CategoriesAdapter(items);
+                        rcCategories.setAdapter(ca);
                     }
 
                     @Override

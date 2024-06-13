@@ -28,9 +28,10 @@
 
             <ImageView
                 android:id="@+id/ivCategoryImage"
-                android:layout_width="97dp"
-                android:layout_height="82dp"
-                android:minHeight="150dp" />
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                android:minHeight="250dp" />
 
             <TextView
                 android:id="@+id/categoryName"
