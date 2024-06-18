@@ -21,5 +21,18 @@ namespace WebPizza.Controllers
             var list = _pizzaContext.Categories.ToList();
             return Ok(list);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var category = _pizzaContext.Categories.FirstOrDefault(c => c.Id == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            _pizzaContext.Categories.Remove(category);
+            _pizzaContext.SaveChanges();
+            return NoContent();
+        }
     }
 }
