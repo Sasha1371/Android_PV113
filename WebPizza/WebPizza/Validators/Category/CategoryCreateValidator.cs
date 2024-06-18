@@ -16,7 +16,10 @@ public class CategoryCreateValidator : AbstractValidator<CategoryCreateVM>
         RuleFor(c => c.Image)
             .NotNull()
                 .WithMessage("Image is not selected")
-            .MustAsync(imageValidator.IsValidImageAsync)
-                .WithMessage("Image is not valid");
+                 .DependentRules(() =>
+                 {
+                     RuleFor(c => c.Image).MustAsync(imageValidator.IsValidImageAsync)
+                         .WithMessage("Image is not valid");
+                 });
     }
 }
