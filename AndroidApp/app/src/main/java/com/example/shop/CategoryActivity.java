@@ -27,6 +27,7 @@ public class CategoryActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+        setupBottomNavigationView(R.id.bottom_navigation);
         rcCategories = findViewById(R.id.rcCategories);
         rcCategories.setHasFixedSize(true);
         rcCategories.setLayoutManager(new GridLayoutManager(this, 1, RecyclerView.VERTICAL, false));

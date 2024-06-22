@@ -26,5 +26,7 @@ public class MainActivity extends BaseActivity {
                 .load(url)
                 .apply(new RequestOptions().override(400))
                 .into(imageView);
+
+        setupBottomNavigationView(R.id.bottom_navigation);
     }
 }

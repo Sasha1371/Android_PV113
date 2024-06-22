@@ -87,4 +87,11 @@
             app:layout_constraintStart_toEndOf="@+id/ivRegImage"
             app:layout_constraintTop_toBottomOf="@+id/tfRegPhone" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navigation_menu"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
