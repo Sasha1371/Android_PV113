@@ -66,6 +66,77 @@ namespace WebPizza.Data
                     context.SaveChanges();
                 }
 
+                // Sizes seed
+                if (context.Sizes.Count() < 1)
+                {
+                    var pizzaSizes = configuration
+                        .GetSection("DefaultSeedData:PizzaSizes")
+                        .Get<string[]>();
+
+                    if (pizzaSizes is null)
+                        throw new Exception("Configuration DefaultSeedData:PizzaSizes is invalid");
+
+                    List<PizzaSizeEntity> sizes = new List<PizzaSizeEntity>();
+
+                    foreach (var size in pizzaSizes)
+                    {
+                        sizes.Add(new PizzaSizeEntity { Name = size });
+                    }
+
+                    context.Sizes.AddRange(sizes);
+                    context.SaveChanges();
+                }
+
+                // Pizza seed
+                if (context.Pizzas.Count() < 1)
+                {
+                    var faker = new Faker("en");
+
+                    var fakePizzas = new Faker<PizzaEntity>("uk")
+                        .RuleFor(o => o.Name, f => f.Commerce.ProductName())
+                        .RuleFor(o => o.Description, f => f.Lorem.Sentence())
+                        .RuleFor(o => o.Rating, f => f.Random.Double(0, 5))
+                        .RuleFor(o => o.IsAvailable, f => f.Random.Bool())
+                        .RuleFor(o => o.CategoryId, f => f.PickRandom(context.Categories.Select(c => c.Id).ToList()));
+
+                    var pizzas = fakePizzas.Generate(10);
+
+                    foreach (var pizza in pizzas)
+                    {
+                        int numberOfPhotos = faker.Random.Int(1, 5);
+                        for (int i = 0; i < numberOfPhotos; i++)
+                        {
+                            var imageUrl = faker.Image.LoremFlickrUrl(keywords: "pizza", width: 1000, height: 800);
+                            var imageBase64 = GetImageAsBase64(httpClient, imageUrl);
+
+                            pizza.Photos.Add(new PizzaPhotoEntity
+                            {
+                                Name = imageService.SaveImageAsync(imageBase64).Result,
+                                Priority = i + 1
+                            });
+                        }
+
+                        pizza.Ingredients = context.Ingredients
+                            .OrderBy(i => Guid.NewGuid())
+                            .Take(new Faker().Random.Int(1, 5))
+                            .Select(i => new PizzaIngredientEntity { IngredientId = i.Id })
+                            .ToList();
+
+                        pizza.Sizes = context.Sizes
+                            .OrderBy(i => Guid.NewGuid())
+                            .Take(new Faker().Random.Int(1, 5))
+                            .Select(s => new PizzaSizePriceEntity
+                            {
+                                SizeId = s.Id,
+                                Price = faker.Random.Decimal(100, 400)
+                            })
+                            .ToList();
+                    }
+
+                    context.Pizzas.AddRange(pizzas);
+                    context.SaveChanges();
+                }
+
             }
         }
         private static string GetImageAsBase64(HttpClient httpClient, string imageUrl)
