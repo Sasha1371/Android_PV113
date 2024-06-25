@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bogus;
+using Microsoft.EntityFrameworkCore;
 using WebPizza.Data.Entities;
+using WebPizza.Interfaces;
 
 namespace WebPizza.Data
 {
@@ -11,7 +13,11 @@ namespace WebPizza.Data
                 .GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<PizzaDbContext>();
+                var imageService = scope.ServiceProvider.GetService<IImageService>();
+                var configuration = scope.ServiceProvider.GetService<IConfiguration>();
                 context.Database.Migrate();
+
+                using var httpClient = new HttpClient();
 
                 if (!context.Categories.Any())
                 {
@@ -37,7 +43,35 @@ namespace WebPizza.Data
                     context.SaveChanges();
                 }
 
+                // Ingredient seed
+                if (context.Ingredients.Count() < 1)
+                {
+                    Faker faker = new Faker();
+
+                    var fakeIngredient = new Faker<IngredientEntity>("uk")
+                        .RuleFor(o => o.DateCreated, f => DateTime.UtcNow.AddDays(f.Random.Int(-10, -1)))
+                        .RuleFor(c => c.Name, f => f.Commerce.ProductMaterial());
+
+                    var fakeIngredients = fakeIngredient.Generate(10);
+
+                    foreach (var ingredient in fakeIngredients)
+                    {
+                        var imageUrl = faker.Image.LoremFlickrUrl(keywords: "fruit", width: 1000, height: 800);
+                        var imageBase64 = GetImageAsBase64(httpClient, imageUrl);
+
+                        ingredient.Image = imageService.SaveImageAsync(imageBase64).Result;
+                    }
+
+                    context.Ingredients.AddRange(fakeIngredients);
+                    context.SaveChanges();
+                }
+
             }
+        }
+        private static string GetImageAsBase64(HttpClient httpClient, string imageUrl)
+        {
+            var imageBytes = httpClient.GetByteArrayAsync(imageUrl).Result;
+            return Convert.ToBase64String(imageBytes);
         }
     }
 }
