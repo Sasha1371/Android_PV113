@@ -3,16 +3,14 @@
 /.idea/
 
 # Build files
-/Booking/bin/
-/Booking/obj/
-/Model/bin/
-/Model/obj/
+/WebPizza/bin/
+/WebPizza/obj/ 
 
 # Development appsettings.json
-/Booking/appsettings.Development.json
+/WebPizza/appsettings.Development.json
 
 # API data
-/Booking/Data/
+/WebPizza/Images/
 
 # Docker volumes
 /volumes/
