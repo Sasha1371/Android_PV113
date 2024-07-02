@@ -2,6 +2,8 @@ package com.example.shop.network;
 
 import com.example.shop.config.Config;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -10,9 +12,16 @@ public class RetrofitClient {
     private Retrofit retrofit;
 
     public RetrofitClient() {
+        HttpLoggingInterceptor interceptor =  new  HttpLoggingInterceptor ();
+        interceptor.setLevel( HttpLoggingInterceptor.Level.BODY );
+
+        OkHttpClient.Builder client =  new  OkHttpClient.Builder ()
+                .addInterceptor(interceptor);
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(Config.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build())
                 .build();
     }
 
@@ -29,6 +38,8 @@ public class RetrofitClient {
     public PizzaApi getPizzaApi() {
         return retrofit.create(PizzaApi.class);
     }
+    public AccountApi getAccountApi() { return retrofit.create(AccountApi.class); }
+
 
 
 }
