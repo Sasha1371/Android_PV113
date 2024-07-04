@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.shop.application.HomeApplication;
 import com.example.shop.dto.account.LoginDTO;
 import com.example.shop.dto.account.LoginResponseDTO;
 import com.example.shop.network.RetrofitClient;
+import com.example.shop.security.JwtSecurityService;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
@@ -58,6 +60,10 @@ public class LoginActivity extends BaseActivity {
                         if(response.isSuccessful()) {
                             LoginResponseDTO result = response.body();
                             String token = result.getToken();
+                            JwtSecurityService jwt = HomeApplication.getInstance();
+                            jwt.saveJwtToken(token);
+                            Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
+                            startActivity(intent);
                         }
                         else {
                             try {
