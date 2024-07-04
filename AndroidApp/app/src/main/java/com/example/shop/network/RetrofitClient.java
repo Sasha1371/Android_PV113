@@ -1,6 +1,9 @@
 package com.example.shop.network;
 
 import com.example.shop.config.Config;
+import com.example.shop.interceptors.JWTInterceptor;
+
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -15,7 +18,11 @@ public class RetrofitClient {
         HttpLoggingInterceptor interceptor =  new  HttpLoggingInterceptor ();
         interceptor.setLevel( HttpLoggingInterceptor.Level.BODY );
 
-        OkHttpClient.Builder client =  new  OkHttpClient.Builder ()
+        OkHttpClient.Builder client =  new  OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .addInterceptor(new JWTInterceptor())
                 .addInterceptor(interceptor);
 
         retrofit = new Retrofit.Builder()

@@ -30,6 +30,9 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        JwtSecurityService jwt = HomeApplication.getInstance();
+        jwt.deleteToken();
+
         etLoginEmail = findViewById(R.id.etLoginEmail);
         etLoginPassword = findViewById(R.id.etLoginPassword);
 
