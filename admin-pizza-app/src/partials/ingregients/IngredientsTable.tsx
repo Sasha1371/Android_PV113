@@ -2,14 +2,15 @@ import { useDeleteIngredientMutation } from "app/services/ingredientService.ts";
 import ConfirmDialog from "components/ConfirmDialog.tsx";
 import EmptyData from "components/EmptyData.tsx";
 import TableCategoriesSkeleton from "components/skeletons/TableCategoriesSkeleton.tsx";
-import { ICategory } from "interfaces/category";
+// import { ICategory } from "interfaces/category";
 import { Link } from "react-router-dom";
 import { API_URL } from "utils/envData.ts";
 
 import React, { useState } from "react";
+import {IIngredient} from "interfaces/ingredient.ts";
 
 interface IngredientsTableProps {
-  ingredients: ICategory[] | undefined;
+  ingredients: IIngredient[] | undefined;
   pagesAvailable: number;
   isLoading: boolean;
 }
