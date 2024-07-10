@@ -1,10 +1,10 @@
-FROM node:18-alpine3.17 as build
+FROM node:alpine
 
 WORKDIR /app
 
 COPY package.json .
 
-RUN npm install --force
+RUN npm install
 
 COPY . .
 
