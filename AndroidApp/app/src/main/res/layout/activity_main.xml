@@ -45,6 +45,32 @@
                 android:id="@+id/btnChooseImage" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tfRegFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/first_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tfRegLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/last_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tfRegEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,30 +78,20 @@
                 android:hint="@string/email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tfRegPIB"
+                android:id="@+id/tfRegUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="@string/pib">
+                android:hint="@string/user_name">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tfRegPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/phone">
-
-                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -88,8 +104,10 @@
                 android:hint="@string/password">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -99,14 +117,6 @@
                 android:background="@drawable/btn_rounded_corner"
                 android:text="@string/btn_register"
                 android:id="@+id/register_btn" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp">
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -14,6 +14,8 @@
     <string name="category_name">Назва категорії</string>
     <string name="categories">Категорії</string>
     <string name="pizza_image">Опис</string>
-
+    <string name="first_name">Ім\'я</string>
+    <string name="last_name">Прізвище</string>
+    <string name="user_name">Нікнейм</string>
 
 </resources>
