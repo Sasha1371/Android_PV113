@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebPizza.Data.Entities.Filters;
 
 namespace WebPizza.Data.Entities
 {
@@ -13,5 +14,7 @@ namespace WebPizza.Data.Entities
         public string Image { get; set; } = null!;
 
         public ICollection<PizzaEntity> Pizzas { get; set; } = null!;
+
+        public virtual ICollection<FilterName> FilterNames { get; set; } = null!;
     }
 }

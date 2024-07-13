@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebPizza.Data;
@@ -11,9 +12,11 @@ using WebPizza.Data;
 namespace WebPizza.Migrations
 {
     [DbContext(typeof(PizzaDbContext))]
-    partial class PizzaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240713155501_Add tbl_FilterValues")]
+    partial class Addtbl_FilterValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,21 +144,6 @@ namespace WebPizza.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tbl_categories");
-                });
-
-            modelBuilder.Entity("WebPizza.Data.Entities.Filters.Filter", b =>
-                {
-                    b.Property<int>("FilterValueId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PizzaId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("FilterValueId", "PizzaId");
-
-                    b.HasIndex("PizzaId");
-
-                    b.ToTable("tbl_filters");
                 });
 
             modelBuilder.Entity("WebPizza.Data.Entities.Filters.FilterName", b =>
@@ -538,25 +526,6 @@ namespace WebPizza.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("WebPizza.Data.Entities.Filters.Filter", b =>
-                {
-                    b.HasOne("WebPizza.Data.Entities.Filters.FilterValue", "FilterValue")
-                        .WithMany()
-                        .HasForeignKey("FilterValueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebPizza.Data.Entities.PizzaEntity", "Pizza")
-                        .WithMany()
-                        .HasForeignKey("PizzaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FilterValue");
-
-                    b.Navigation("Pizza");
                 });
 
             modelBuilder.Entity("WebPizza.Data.Entities.Filters.FilterName", b =>

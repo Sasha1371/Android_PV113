@@ -3,6 +3,7 @@ using WebPizza.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WebPizza.Data.Entities.Identity;
+using WebPizza.Data.Entities.Filters;
 
 namespace WebPizza.Data
 {
@@ -21,6 +22,9 @@ namespace WebPizza.Data
         public DbSet<PizzaSizePriceEntity> PizzaSizes { get; set; } = null!;
 
         public DbSet<PizzaPhotoEntity> PizzaPhotos { get; set; } = null!;
+        public DbSet<FilterName> FilterNames { get; set; } = null!;
+        public DbSet<FilterValue> FilterValues { get; set; } = null!;
+        public DbSet<Filter> Filters { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,6 +71,11 @@ namespace WebPizza.Data
                 .HasOne(ps => ps.Size)
                 .WithMany(s => s.PizzaSizePrices)
                 .HasForeignKey(ps => ps.SizeId);
+
+            modelBuilder.Entity<Filter>(f =>
+            {
+                f.HasKey(vp => new { vp.FilterValueId, vp.PizzaId });
+            });
         }
     }
 }
