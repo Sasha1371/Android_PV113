@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Metrics;
+using WebPizza.Data.Entities.Filters;
 
 namespace WebPizza.Data.Entities;
 
@@ -25,4 +26,6 @@ public class PizzaEntity : BaseEntity
     public ICollection<PizzaPhotoEntity> Photos { get; set; } = new List<PizzaPhotoEntity>();
     public List<PizzaIngredientEntity> Ingredients { get; set; } = new List<PizzaIngredientEntity>();
     public List<PizzaSizePriceEntity> Sizes { get; set; } = new List<PizzaSizePriceEntity>();
+    public ICollection<Filter> Filters { get; set; } = new List<Filter>();
+
 }

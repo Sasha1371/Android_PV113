@@ -9,6 +9,7 @@ using WebPizza.Services.Interfaces;
 using FluentValidation;
 using WebPizza.ViewModels.Category;
 using WebPizza.ViewModels.Ingredient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebPizza.Controllers;
 
@@ -29,6 +30,30 @@ public class PizzaController(IMapper mapper,
             var list = await pizzaContext.Pizzas
                .ProjectTo<PizzaVm>(mapper.ConfigurationProvider)
                .ToArrayAsync();
+
+            return Ok(list);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "Internal server error");
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Search([FromQuery] PizzaSearchVm search)
+    {
+        try
+        {
+            var query = pizzaContext.Pizzas.AsQueryable();
+
+            if (search.ValuesId != null && search.ValuesId.Length > 0)
+            {
+                query = query.Where(p => search.ValuesId.All(id => p.Filters.Any(f => f.FilterValueId == id)));
+            }
+
+            var list = await query
+                .ProjectTo<PizzaVm>(mapper.ConfigurationProvider)
+                .ToArrayAsync();
 
             return Ok(list);
         }

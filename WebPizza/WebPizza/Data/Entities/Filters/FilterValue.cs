@@ -14,5 +14,7 @@ namespace WebPizza.Data.Entities.Filters
         public int FilterNameId { get; set; }
         public virtual FilterName FilterName { get; set; } = null!;
 
+        public ICollection<Filter> Filters { get; set; } = new List<Filter>();
+
     }
 }
