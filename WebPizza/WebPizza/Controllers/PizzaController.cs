@@ -48,7 +48,29 @@ public class PizzaController(IMapper mapper,
 
             if (search.ValuesId != null && search.ValuesId.Length > 0)
             {
-                query = query.Where(p => search.ValuesId.All(id => p.Filters.Any(f => f.FilterValueId == id)));
+
+                var filterValues = await pizzaContext.FilterValues
+                    .Include(fv => fv.FilterName)
+                    .Where(fv => search.ValuesId.Contains(fv.Id))
+                    .Where(x=>x.FilterName.CategoryId==search.CategoryId)
+                    .ToListAsync();
+
+
+                var groupedFilterValues = filterValues
+                    .GroupBy(fv => fv.FilterName.Name)
+                    .ToList();
+
+
+                foreach (var group in groupedFilterValues)
+                {
+                    var ids = group.Select(fv => fv.Id).ToList();
+                    query = query.Where(p => p.Filters.Any(f => ids.Contains(f.FilterValueId)));
+                }
+            }
+
+            if(search.CategoryId!=0)
+            {
+                query = query.Where(x=> x.CategoryId==search.CategoryId);
             }
 
             var list = await query
