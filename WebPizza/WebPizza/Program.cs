@@ -1,6 +1,8 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -18,6 +20,18 @@ using WebPizza.ViewModels.Category;
 using WebPizza.ViewModels.Pizza;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//IIS Sever
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 1048576000; // 1000 MB
+});
+
+//Kestrel Server
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = 1048576000; // if don't set default value is: 1000 MB 
+});
 
 // Add services to the container.
 builder.Services.AddDbContext<PizzaDbContext>(opt =>
