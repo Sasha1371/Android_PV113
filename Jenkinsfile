@@ -3,9 +3,9 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'bb9a94fe-56df-49db-a591-e63fd2662a95'
-        SQL_CONTAINER_NAME = 'lendy123/api-postgresql-container'
-        FRONTEND_CONTAINER_NAME = 'lendy123/client-container'
-        BACKEND_CONTAINER_NAME = 'lendy123/api-pizza-container'
+        SQL_CONTAINER_NAME = 'lendy123/postgres'
+        FRONTEND_CONTAINER_NAME = 'lendy123/pizza-app'
+        BACKEND_CONTAINER_NAME = 'lendy123/mypizza-client'
     }
     stages {
         stage('Вхід у DockerHub') {
@@ -26,48 +26,48 @@ pipeline {
                 }
             }
         }
-        stage('Тегування api-postgresql-container зображення') {
+        stage('Тегування postgres зображення') {
             steps {
                 script {
-                    sh 'docker tag lendy123/api-postgresql-container:version${BUILD_NUMBER} lendy123/api-postgresql-container:latest'
+                    sh 'docker tag lendy123/postgres:version${BUILD_NUMBER} lendy123/postgres:latest'
                 }
             }
         }
-        stage('Пуш api-postgresql-container в Docker Hub') {
+        stage('Пуш postgres в Docker Hub') {
             steps {
                 script {
-                    sh 'docker push lendy123/api-postgresql-container:version${BUILD_NUMBER}'
-                    sh 'docker push lendy123/api-postgresql-container:latest'
+                    sh 'docker push lendy123/postgres:version${BUILD_NUMBER}'
+                    sh 'docker push lendy123/postgres:latest'
                 }
             }
         }
-        stage('Тегування api-pizza-container зображення') {
+        stage('Тегування pizza-app зображення') {
             steps {
                 script {
-                    sh 'docker tag lendy123/api-pizza-container:version${BUILD_NUMBER} lendy123/api-pizza-container:latest'
+                    sh 'docker tag lendy123/pizza-app:version${BUILD_NUMBER} lendy123/pizza-app:latest'
                 }
             }
         }
-        stage('Пуш api-pizza-container в Docker Hub') {
+        stage('Пуш pizza-app в Docker Hub') {
             steps {
                 script {
-                    sh 'docker push lendy123/api-pizza-container:version${BUILD_NUMBER}'
-                    sh 'docker push lendy123/api-pizza-container:latest'
+                    sh 'docker push lendy123/pizza-app:version${BUILD_NUMBER}'
+                    sh 'docker push lendy123/pizza-app:latest'
                 }
             }
         }
         stage('Тегування client-container зображення') {
             steps {
                 script {
-                    sh 'docker tag lendy123/client-container:version${BUILD_NUMBER} lendy123/client-container:latest'
+                    sh 'docker tag lendy123/mypizza-client:version${BUILD_NUMBER} lendy123/mypizza-client:latest'
                 }
             }
         }
         stage('Пуш client-container в Docker Hub') {
             steps {
                 script {
-                    sh 'docker push lendy123/client-container:version${BUILD_NUMBER}'
-                    sh 'docker push lendy123/client-container:latest'
+                    sh 'docker push lendy123/mypizza-client:version${BUILD_NUMBER}'
+                    sh 'docker push lendy123/mypizza-client:latest'
                 }
             }
         }
