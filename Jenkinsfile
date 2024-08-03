@@ -29,7 +29,7 @@ pipeline {
         stage('Тегування postgres зображення') {
             steps {
                 script {
-                    sh 'docker tag lendy123/postgres:version${BUILD_NUMBER} lendy123/postgres:latest'
+                    sh 'docker tag postgres:version${BUILD_NUMBER} lendy123/postgres:latest'
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline {
         stage('Тегування pizza-app зображення') {
             steps {
                 script {
-                    sh 'docker tag lendy123/pizza-app:version${BUILD_NUMBER} lendy123/pizza-app:latest'
+                    sh 'docker tag pizza-app:version${BUILD_NUMBER} lendy123/pizza-app:latest'
                 }
             }
         }
@@ -59,7 +59,7 @@ pipeline {
         stage('Тегування client-container зображення') {
             steps {
                 script {
-                    sh 'docker tag lendy123/mypizza-client:version${BUILD_NUMBER} lendy123/mypizza-client:latest'
+                    sh 'docker tag mypizza-client:version${BUILD_NUMBER} lendy123/mypizza-client:latest'
                 }
             }
         }
