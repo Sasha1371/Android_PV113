@@ -68,48 +68,6 @@ pipeline {
                 }
             }
         }
-        stage('Зупинка та видалення старого контейнера FrontEnd') {
-            steps {
-                script {
-                    sh """
-                    if [ \$(docker ps -aq -f name=${FRONTEND_CONTAINER_NAME}) ]; then
-                        docker stop ${FRONTEND_CONTAINER_NAME}
-                        docker rm ${FRONTEND_CONTAINER_NAME}
-                    else
-                        echo "Контейнер ${FRONTEND_CONTAINER_NAME} не знайдено. Продовжуємо..."
-                    fi
-                    """
-                }
-            }
-        }
-        stage('Зупинка та видалення старого контейнера BackEnd') {
-            steps {
-                script {
-                    sh """
-                    if [ \$(docker ps -aq -f name=${BACKEND_CONTAINER_NAME}) ]; then
-                        docker stop ${BACKEND_CONTAINER_NAME}
-                        docker rm ${BACKEND_CONTAINER_NAME}
-                    else
-                        echo "Контейнер ${BACKЕНD_CONTAINER_NAME} не знайдено. Продовжуємо..."
-                    fi
-                    """
-                }
-            }
-        }
-        stage('Зупинка та видалення старого контейнера MySQL') {
-            steps {
-                script {
-                    sh """
-                    if [ \$(docker ps -aq -f name=${SQL_CONTAINER_NAME}) ]; then
-                        docker stop ${SQL_CONTAINER_NAME}
-                        docker rm ${SQL_CONTAINER_NAME}
-                    else
-                        echo "Контейнер ${SQL_CONTAINER_NAME} не знайдено. Продовжуємо..."
-                    fi
-                    """
-                }
-            }
-        }    
         stage('Чистка старих образів') {
             steps {
                 script {
