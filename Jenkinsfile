@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = '65c7ae28-1031-4eb9-93c3-3f058882703b'
+        DOCKER_CREDENTIALS_ID = 'd0777b7b-6d7f-47d7-96db-da18b6772fe0'
         SQL_CONTAINER_NAME = 'lendy123/postgres'
         FRONTEND_CONTAINER_NAME = 'lendy123/pizza-app'
         BACKEND_CONTAINER_NAME = 'lendy123/mypizza-client'
